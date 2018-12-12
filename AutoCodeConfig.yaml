@@ -1,88 +1,160 @@
 ---
-genPolicy: "Create"
-openAPISpec: "None"
+genPolicy: "None"
+openAPISpec: "http://13.56.210.25/v2/api-docs"
 generators:
 - type: "no_params"
   assertions:
   - "@StatusCode == 200"
-  severity: null
+  tags: null
+  severity: "Major"
   database: null
-  inactive: false
+  inactive: true
   matches: []
+  authors: ""
+  abacResources: null
 - type: "sla"
   assertions:
-  - "@StatusCode == 200"
-  - "@StatusCode != 404"
-  severity: null
+  - "@StatusCode == 200 AND @ResponseTime < 500"
+  tags: null
+  severity: "Major"
   database: null
-  inactive: false
+  inactive: true
   matches:
   - name: null
-    value: "1000"
-    methods: "Get"
+    value: null
+    methods: null
     denyRoles: null
-    pathPatterns: "/**"
+    allowRoles: null
+    pathPatterns: null
     resourceSamples: null
     queryParams: null
     bodyProperties: null
+  authors: ""
+  abacResources: null
 - type: "anonymous_invalid"
   assertions:
-  - "@StatusCode != 200"
-  severity: null
+  - "@StatusCode == 401 OR @StatusCode == 403"
+  tags: null
+  severity: "Major"
   database: null
-  inactive: false
-  matches: []
+  inactive: true
+  matches:
+  - name: null
+    value: null
+    methods: null
+    denyRoles: null
+    allowRoles: null
+    pathPatterns: ""
+    resourceSamples: null
+    queryParams: null
+    bodyProperties: null
+  authors: ""
+  abacResources: null
 - type: "auth_invalid"
   assertions:
-  - "@StatusCode != 200"
-  severity: null
+  - "@StatusCode == 401 OR @StatusCode == 403"
+  tags: null
+  severity: "Major"
   database: null
-  inactive: false
-  matches: []
+  inactive: true
+  matches:
+  - name: null
+    value: null
+    methods: null
+    denyRoles: null
+    allowRoles: null
+    pathPatterns: ""
+    resourceSamples: null
+    queryParams: null
+    bodyProperties: null
+  authors: ""
+  abacResources: null
+- type: "auth_invalid_empty"
+  assertions:
+  - "@StatusCode == 401 OR @StatusCode == 403"
+  tags: null
+  severity: "Major"
+  database: null
+  inactive: true
+  matches:
+  - name: null
+    value: null
+    methods: null
+    denyRoles: null
+    allowRoles: null
+    pathPatterns: ""
+    resourceSamples: null
+    queryParams: null
+    bodyProperties: null
+  authors: ""
+  abacResources: null
+- type: "auth_invalid_sql"
+  assertions:
+  - "@StatusCode == 401 OR @StatusCode == 403"
+  tags: null
+  severity: "Major"
+  database: null
+  inactive: true
+  matches:
+  - name: null
+    value: null
+    methods: null
+    denyRoles: null
+    allowRoles: null
+    pathPatterns: ""
+    resourceSamples: null
+    queryParams: null
+    bodyProperties: null
+  authors: ""
+  abacResources: null
 - type: "rbac"
   assertions:
-  - "@StatusCode == 403"
-  severity: null
+  - "Disallowed:@StatusCode == 401 OR @StatusCode == 403"
+  - "Allowed:@StatusCode != 401 AND @StatusCode != 403"
+  tags: null
+  severity: "Major"
   database: null
-  inactive: false
+  inactive: true
   matches:
-  - name: "Admin access"
-    value: null
-    methods: "Post, Put, Delete"
-    denyRoles: "Writer, Reader"
-    pathPatterns: "/api/v1/orgs/**, /api/v1/accounts/**"
-    resourceSamples: null
+  - name: "ROLE_ADMIN,ROLE_PM,ROLE_USER"
+    value: "AutoMap"
+    methods: null
+    denyRoles: null
+    allowRoles: null
+    pathPatterns: null
+    resourceSamples: "Get:/api/v1/orgs/:Allowed[ROLE_ADMIN]\nPost:/api/v1/accounts/:Allowed[ROLE_ADMIN,ROLE_PM]"
     queryParams: null
     bodyProperties: null
-  - name: "Writer access"
-    value: null
-    methods: "Post, Put, Delete"
-    denyRoles: "Reader"
-    pathPatterns: "/api/v1/projects/**, /api/v1/regions/**"
-    resourceSamples: null
-    queryParams: null
-    bodyProperties: null
-  - name: "Collaborator access"
-    value: null
-    methods: "Post, Delete"
-    denyRoles: "Collaborator"
-    pathPatterns: "/api/v1/projects/**"
-    resourceSamples: null
-    queryParams: null
-    bodyProperties: null
-  - name: "Reader access"
-    value: null
-    methods: "Get, Post, Put, Delete"
-    denyRoles: "Other"
-    pathPatterns: "/api/v1/**"
-    resourceSamples: null
-    queryParams: null
-    bodyProperties: null
+  authors: ""
+  abacResources: null
+- type: "abac"
+  assertions:
+  - "Create:@StatusCode == 200 OR @StatusCode == 201"
+  - "Disallowed:@StatusCode == 401 OR @StatusCode == 403"
+  tags: null
+  severity: "Major"
+  database: null
+  inactive: true
+  matches: []
+  authors: ""
+  abacResources: null
+- type: "abacpositive"
+  assertions:
+  - "Create:@StatusCode == 200 OR @StatusCode == 201"
+  - "Allowed:@StatusCode == 200 OR @StatusCode == 201"
+  tags: null
+  severity: "Major"
+  database: null
+  inactive: true
+  matches: []
+  authors: ""
+  abacResources: null
 - type: "DDOS"
   assertions:
   - "@StatusCode != 401"
   - "@StatusCode != 404"
-  severity: null
+  tags: null
+  severity: "Major"
   database: null
   inactive: false
   matches:
@@ -90,94 +162,129 @@ generators:
     value: null
     methods: null
     denyRoles: null
-    pathPatterns: null
+    allowRoles: null
+    pathPatterns: "POST:/api/v1/accounts"
     resourceSamples: null
     queryParams: null
     bodyProperties: null
-- type: "sql_injection_timebound"
-  assertions:
-  - "@ResponseTime > 7000"
-  - "@ResponseTime < 10000"
-  - "@StatusCode != 404"
-  severity: null
-  database:
-    name: "MySQL"
-    version: "5.7"
-  inactive: false
-  matches: []
+  authors: ""
+  abacResources: null
 - type: "XSS_Injection"
   assertions:
   - "@StatusCode != 200"
   - "@StatusCode != 401"
   - "@StatusCode != 404"
   - "@StatusCode != 500"
-  severity: null
+  tags: null
+  severity: "Major"
   database: null
-  inactive: false
+  inactive: true
   matches: []
+  authors: ""
+  abacResources: null
+- type: "sql_injection_timebound"
+  assertions:
+  - "@ResponseTime < 7000 OR @ResponseTime > 10000"
+  - "@StatusCode != 404"
+  tags: null
+  severity: "Major"
+  database:
+    name: "MySQL"
+    version: "5.7"
+  inactive: true
+  matches: []
+  authors: ""
+  abacResources: null
 - type: "log_Forging"
   assertions:
   - "@StatusCode != 200"
   - "@StatusCode != 401"
   - "@StatusCode != 404"
   - "@StatusCode != 500"
-  severity: null
+  tags: null
+  severity: "Major"
   database: null
-  inactive: false
+  inactive: true
   matches: []
+  authors: ""
+  abacResources: null
 - type: "invalid_datatype"
   assertions:
   - "@StatusCode != 401"
   - "@StatusCode != 404"
-  severity: null
+  tags: null
+  severity: "Major"
   database: null
-  inactive: false
+  inactive: true
   matches: []
+  authors: ""
+  abacResources: null
 - type: "special_chars "
   assertions:
   - "@StatusCode != 200"
   - "@StatusCode != 401"
   - "@StatusCode != 404"
   - "@StatusCode != 500"
-  severity: null
+  tags: null
+  severity: "Major"
   database: null
-  inactive: false
+  inactive: true
   matches: []
+  authors: ""
+  abacResources: null
 - type: "null_value"
   assertions:
   - "@StatusCode != 200"
   - "@StatusCode != 401"
   - "@StatusCode != 404"
   - "@StatusCode != 500"
-  severity: null
+  tags: null
+  severity: "Major"
   database: null
-  inactive: false
+  inactive: true
   matches: []
+  authors: ""
+  abacResources: null
 - type: "empty_value"
   assertions:
   - "@StatusCode != 200"
   - "@StatusCode != 401"
   - "@StatusCode != 404"
   - "@StatusCode != 500"
-  severity: null
+  tags: null
+  severity: "Major"
   database: null
-  inactive: false
+  inactive: true
   matches: []
+  authors: ""
+  abacResources: null
 - type: "negative_number"
   assertions:
   - "@StatusCode != 401"
   - "@StatusCode != 404"
+  tags: null
+  severity: "Major"
+  database: null
+  inactive: true
+  matches: []
+  authors: ""
+  abacResources: null
+- type: "customize"
+  assertions: []
+  tags: null
   severity: null
   database: null
   inactive: false
-  matches: []
-- type: "create"
-  assertions:
-  - "@StatusCode != 200"
-  - "@StatusCode != 401"
-  - "@StatusCode != 404"
-  - "@StatusCode != 500"
-  severity: null
-  database: null
-  inactive: false
-  matches: []
+  matches:
+  - name: null
+    value: null
+    methods: null
+    denyRoles: null
+    allowRoles: null
+    pathPatterns: null
+    resourceSamples: "Get:/api/v1/alerts[Accept=application/json,Content-Type=application/json]\n\
+      Post:/api/v1/accounts[Accept: application/json,Content-Type: application/json]"
+    queryParams: null
+    bodyProperties: null
+  authors: ""
+  abacResources: null
