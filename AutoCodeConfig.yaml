@@ -5,8 +5,7 @@ generators:
 - type: "no_params"
   assertions:
   - "@StatusCode == 200"
-  tags:
-  - " OWASP - OTG-CONFIG-006"
+  tags: null
   severity: "Major"
   database: null
   inactive: true
@@ -20,15 +19,22 @@ generators:
   severity: "Major"
   database: null
   inactive: true
-  matches: []
+  matches:
+  - name: null
+    value: null
+    methods: null
+    denyRoles: null
+    allowRoles: null
+    pathPatterns: null
+    resourceSamples: null
+    queryParams: null
+    bodyProperties: null
   authors: ""
   abacResources: null
 - type: "anonymous_invalid"
   assertions:
   - "@StatusCode == 401 OR @StatusCode == 403"
-  tags:
-  - "OWASP - OTG-AUTHN-002"
-  - "FX Top 10 - API Vulnerability"
+  tags: null
   severity: "Major"
   database: null
   inactive: true
@@ -47,15 +53,7 @@ generators:
 - type: "auth_invalid"
   assertions:
   - "@StatusCode == 401 OR @StatusCode == 403"
-  tags:
-  - "OWASP A2"
-  - "OWASP A5"
-  - "OWASP A6"
-  - "OWASP A7"
-  - "[PIC DSS 3.0] 6.5.8"
-  - "[PIC DSS 3.0] 6.5.10"
-  - "OTG-AUTHN-004"
-  - "FX Top 10 - API Vulnerability"
+  tags: null
   severity: "Major"
   database: null
   inactive: true
@@ -74,15 +72,7 @@ generators:
 - type: "auth_invalid_empty"
   assertions:
   - "@StatusCode == 401 OR @StatusCode == 403"
-  tags:
-  - "OWASP A2"
-  - "OWASP A5"
-  - "OWASP A6"
-  - "OWASP A7"
-  - "[PIC DSS 3.0] 6.5.8"
-  - "[PIC DSS 3.0] 6.5.10"
-  - "OTG-AUTHN-004"
-  - "FX Top 10 - API Vulnerability"
+  tags: null
   severity: "Major"
   database: null
   inactive: true
@@ -101,11 +91,7 @@ generators:
 - type: "auth_invalid_sql"
   assertions:
   - "@StatusCode == 401 OR @StatusCode == 403"
-  tags:
-  - "OWASP A1"
-  - "[PCI DSS 3.0] 6.5.1"
-  - "OTG-AUTHN-004"
-  - "FX Top 10 - API Vulnerability"
+  tags: null
   severity: "Major"
   database: null
   inactive: true
@@ -125,9 +111,7 @@ generators:
   assertions:
   - "Disallowed:@StatusCode == 401 OR @StatusCode == 403"
   - "Allowed:@StatusCode != 401 AND @StatusCode != 403"
-  tags:
-  - "OWASP - OTG-IDENT-001 "
-  - "FX Top 10 - API Vulnerability"
+  tags: null
   severity: "Major"
   database: null
   inactive: true
@@ -147,8 +131,7 @@ generators:
   assertions:
   - "Create:@StatusCode == 200 OR @StatusCode == 201"
   - "Disallowed:@StatusCode == 401 OR @StatusCode == 403"
-  tags:
-  - "FX Top 10 - API Vulnerability"
+  tags: null
   severity: "Major"
   database: null
   inactive: true
@@ -159,12 +142,31 @@ generators:
   assertions:
   - "Create:@StatusCode == 200 OR @StatusCode == 201"
   - "Allowed:@StatusCode == 200 OR @StatusCode == 201"
-  tags:
-  - "FX Top 10 - API Vulnerability"
+  tags: null
   severity: "Major"
   database: null
   inactive: true
   matches: []
+  authors: ""
+  abacResources: null
+- type: "DDOS"
+  assertions:
+  - "@StatusCode != 401"
+  - "@StatusCode != 404"
+  tags: null
+  severity: "Major"
+  database: null
+  inactive: true
+  matches:
+  - name: "pageSize, page_size, maxResults, max_results"
+    value: null
+    methods: null
+    denyRoles: null
+    allowRoles: null
+    pathPatterns: "POST:/api/v1/accounts"
+    resourceSamples: null
+    queryParams: null
+    bodyProperties: null
   authors: ""
   abacResources: null
 - type: "XSS_Injection"
@@ -173,16 +175,98 @@ generators:
   - "@StatusCode != 401"
   - "@StatusCode != 404"
   - "@StatusCode != 500"
-  tags:
-  - "OWASP A3"
-  - "[PIC DSS 3.0] 6.5.7"
-  - "OWASP - OTG-INPVAL-001"
-  - "OWASP - OTG-INPVAL-002"
-  - "FX Top 10 - API Vulnerability"
+  tags: null
   severity: "Major"
   database: null
   inactive: true
   matches: []
+  authors: ""
+  abacResources: null
+- type: "sql_injection_timebound"
+  assertions:
+  - "@ResponseTime < 7000 OR @ResponseTime > 10000"
+  - "@StatusCode != 404"
+  tags: null
+  severity: "Major"
+  database:
+    name: "MySQL"
+    version: "5.7"
+  inactive: false
+  matches:
+  - name: null
+    value: null
+    methods: null
+    denyRoles: null
+    allowRoles: null
+    pathPatterns: "GET:/api/v1/alerts\nGET:/api/v1/alerts/{id}\nGET:/api/v1/alerts/ref/{id}\n\
+      GET:/api/v1/bot-clusters\nPOST:/api/v1/bot-clusters\nGET:/api/v1/bot-clusters/{id}\n\
+      PUT:/api/v1/bot-clusters/{id}\nDELETE:/api/v1/bot-clusters/{id}\nGET:/api/v1/bot-clusters/{id}/ping\n\
+      PUT:/api/v1/bot-clusters/{id}/terminal\nPOST:/api/v1/bot-clusters/batch\nGET:/api/v1/bot-clusters/entitled\n\
+      GET:/api/v1/bot-clusters/search\nGET:/api/v1/bot-clusters/superbotnetwork\n\
+      GET:/api/v1/dashboard/bots/{id}/savings\nGET:/api/v1/dashboard/count-auto-suggestions\n\
+      GET:/api/v1/dashboard/count-bugs\nGET:/api/v1/dashboard/count-bugs-between\n\
+      GET:/api/v1/dashboard/count-bytes\nGET:/api/v1/dashboard/count-bytes-between\n\
+      GET:/api/v1/dashboard/count-channels\nGET:/api/v1/dashboard/count-ebots\nGET:/api/v1/dashboard/count-envs\n\
+      GET:/api/v1/dashboard/count-ibots\nGET:/api/v1/dashboard/count-jobs\nGET:/api/v1/dashboard/count-projects\n\
+      GET:/api/v1/dashboard/count-runs\nGET:/api/v1/dashboard/count-runs-between\n\
+      GET:/api/v1/dashboard/count-suites\nGET:/api/v1/dashboard/count-tests\nGET:/api/v1/dashboard/count-tests-between\n\
+      GET:/api/v1/dashboard/count-time\nGET:/api/v1/dashboard/count-time-between\n\
+      GET:/api/v1/dashboard/issuetracker/{id}/issuetracker-savings\nGET:/api/v1/dashboard/projects/{id}/savings\n\
+      GET:/api/v1/dashboard/run/{id}/run-savings\nGET:/api/v1/data-records\nPUT:/api/v1/data-records\n\
+      POST:/api/v1/data-records\nDELETE:/api/v1/data-records/{dataset_id}/delete-all\n\
+      DELETE:/api/v1/data-records/{id}\nPOST:/api/v1/data-records/batch\nGET:/api/v1/data-sets\n\
+      PUT:/api/v1/data-sets\nPOST:/api/v1/data-sets\nDELETE:/api/v1/data-sets/{id}\n\
+      POST:/api/v1/data-sets/batch\nPUT:/api/v1/envs\nPOST:/api/v1/envs\nGET:/api/v1/envs/{id}\n\
+      DELETE:/api/v1/envs/{id}\nGET:/api/v1/envs/{id}/envcategoryrating\nGET:/api/v1/envs/{id}/envrating\n\
+      PUT:/api/v1/envs/assessmentRating\nPOST:/api/v1/envs/batch\nGET:/api/v1/envs/project-id/{id}\n\
+      GET:/api/v1/events/orgevents\nGET:/api/v1/events/register\nGET:/api/v1/issue-trackers\n\
+      GET:/api/v1/issue-trackers/{id}\nPUT:/api/v1/issue-trackers/{id}\nPOST:/api/v1/issue-trackers/issue-tracker-bot\n\
+      DELETE:/api/v1/issue-trackers/issue-tracker-bot/{id}\nGET:/api/v1/issue-trackers/skill-type/{type}\n\
+      GET:/api/v1/issues/env-id/{id}\nGET:/api/v1/issues/job-id/{id}\nGET:/api/v1/issues/project-id/{id}\n\
+      GET:/api/v1/jobs\nPUT:/api/v1/jobs\nPOST:/api/v1/jobs\nGET:/api/v1/jobs/{id}\n\
+      DELETE:/api/v1/jobs/{id}\nPOST:/api/v1/jobs/batch\nGET:/api/v1/jobs/project-id/{id}\n\
+      GET:/api/v1/notifications\nPOST:/api/v1/notifications\nGET:/api/v1/notifications/{id}\n\
+      PUT:/api/v1/notifications/{id}\nDELETE:/api/v1/notifications/{id}\nPOST:/api/v1/notifications/batch\n\
+      GET:/api/v1/orgs\nPOST:/api/v1/orgs\nGET:/api/v1/orgs/{id}\nPUT:/api/v1/orgs/{id}\n\
+      DELETE:/api/v1/orgs/{id}\nGET:/api/v1/orgs/{id}/users\nGET:/api/v1/orgs/{orgId}/org-user/{orgUserId}\n\
+      PUT:/api/v1/orgs/{orgId}/users/{userId}\nPOST:/api/v1/orgs/{orgId}/users/{userId}/reset-password\n\
+      POST:/api/v1/orgs/{orgId}/users/add-member\nGET:/api/v1/orgs/by-user\nGET:/api/v1/orgs/find-by-name/{name}\n\
+      GET:/api/v1/orgs/login-status\nGET:/api/v1/orgs/search\nGET:/api/v1/projects\n\
+      PUT:/api/v1/projects\nPOST:/api/v1/projects\nGET:/api/v1/projects/{id}\nPUT:/api/v1/projects/{id}\n\
+      DELETE:/api/v1/projects/{id}\nGET:/api/v1/projects/{id}/auto-suggestions/{status}\n\
+      GET:/api/v1/projects/{id}/auto-suggestions/activate/{suiteName}/{tcNumber}\n\
+      GET:/api/v1/projects/{id}/auto-suggestions/category-counts/{status}\nGET:/api/v1/projects/{id}/auto-suggestions/skip/{suiteName}/{tcNumber}\n\
+      GET:/api/v1/projects/{id}/clear-all-suggestions\nGET:/api/v1/projects/{id}/count-archived-auto-suggestions/{status}\n\
+      GET:/api/v1/projects/{id}/endpoints\nGET:/api/v1/projects/{id}/files\nGET:/api/v1/projects/{id}/files-all\n\
+      GET:/api/v1/projects/{id}/project-checksums\nGET:/api/v1/projects/{id}/project-checksums-all\n\
+      POST:/api/v1/projects/{id}/project-imports\nPOST:/api/v1/projects/{id}/project-sync\n\
+      GET:/api/v1/projects/{id}/resource-definitions\nGET:/api/v1/projects/{id}/search-auto-suggestions/search/{status}\n\
+      GET:/api/v1/projects/{projectId}/autocodeconfig\nPOST:/api/v1/projects/{projectId}/autocodeconfig\n\
+      GET:/api/v1/projects/{projectId}/autocodeconfig/add-abac-rules\nGET:/api/v1/projects/{projectId}/autocodeconfig/add-abacpositive-rules\n\
+      GET:/api/v1/projects/{projectId}/env\nPOST:/api/v1/projects/{projectId}/env\n\
+      PUT:/api/v1/projects/{projectId}/env/{envId}\nDELETE:/api/v1/projects/{projectId}/env/{envId}\n\
+      POST:/api/v1/projects/{projectId}/envs\nGET:/api/v1/projects/{projectId}/files/{id}\n\
+      POST:/api/v1/projects/{projectId}/new/autocodeconfig\nGET:/api/v1/projects/find-by-name/{name}\n\
+      GET:/api/v1/projects/name/{name}\nGET:/api/v1/projects/search\nGET:/api/v1/runs/{id}\n\
+      DELETE:/api/v1/runs/{id}\nGET:/api/v1/runs/{id}/test-suite-response/{name}\n\
+      GET:/api/v1/runs/{id}/test-suite-responses\nGET:/api/v1/runs/{id}/test-suite-summary\n\
+      GET:/api/v1/runs/{id}/test-suite-summary/search\nGET:/api/v1/runs/{jobId}/testSuite/test-suite-responses/{name}\n\
+      GET:/api/v1/runs/job/{id}\nPOST:/api/v1/runs/job/{id}\nGET:/api/v1/runs/job/{id}/runNo/{runNo}\n\
+      POST:/api/v1/runs/job/{jobId}/rerun/{runId}\nDELETE:/api/v1/runs/job/{jobId}/run/{runId}\n\
+      GET:/api/v1/runs/stoprun/{id}\nPOST:/api/v1/runs/testsuite\nGET:/api/v1/skills\n\
+      PUT:/api/v1/skills\nPOST:/api/v1/skills\nGET:/api/v1/skills/{id}\nDELETE:/api/v1/skills/{id}\n\
+      GET:/api/v1/skills/type/{type}\nGET:/api/v1/system-settings\nPUT:/api/v1/system-settings\n\
+      GET:/api/v1/system-settings/{id}\nGET:/api/v1/test-suites\nPUT:/api/v1/test-suites\n\
+      POST:/api/v1/test-suites\nGET:/api/v1/test-suites/{id}\nDELETE:/api/v1/test-suites/{id}\n\
+      GET:/api/v1/test-suites/{id}/test-suite/search\nPOST:/api/v1/test-suites/{projectId}/ui\n\
+      POST:/api/v1/test-suites/batch\nPUT:/api/v1/test-suites/deletedtestsuites\n\
+      GET:/api/v1/test-suites/project-id/{id}\nGET:/api/v1/test-suites/project-id/{id}/coverage\n\
+      GET:/api/v1/test-suites/search/{keyword}\nGET:/api/v1/users\nPUT:/api/v1/users\n\
+      POST:/api/v1/users/enterprise-sign-up\nPOST:/api/v1/users/org-add\nPOST:/api/v1/users/org-remove\n\
+      POST:/api/v1/users/personal-sign-up\nGET:/api/v1/users/status\nPOST:/api/v1/users/team-sign-up"
+    resourceSamples: "User-Create"
+    queryParams: null
+    bodyProperties: "id,name"
   authors: ""
   abacResources: null
 - type: "log_Forging"
@@ -191,8 +275,7 @@ generators:
   - "@StatusCode != 401"
   - "@StatusCode != 404"
   - "@StatusCode != 500"
-  tags:
-  - "OWASP - Log Injection"
+  tags: null
   severity: "Major"
   database: null
   inactive: true
@@ -203,8 +286,7 @@ generators:
   assertions:
   - "@StatusCode != 401"
   - "@StatusCode != 404"
-  tags:
-  - "OWASP - OTG-BUSLOGIC-001"
+  tags: null
   severity: "Major"
   database: null
   inactive: true
@@ -217,8 +299,7 @@ generators:
   - "@StatusCode != 401"
   - "@StatusCode != 404"
   - "@StatusCode != 500"
-  tags:
-  - "OWASP - OTG-BUSLOGIC-001"
+  tags: null
   severity: "Major"
   database: null
   inactive: true
@@ -231,8 +312,7 @@ generators:
   - "@StatusCode != 401"
   - "@StatusCode != 404"
   - "@StatusCode != 500"
-  tags:
-  - "OWASP - OTG-BUSLOGIC-001"
+  tags: null
   severity: "Major"
   database: null
   inactive: true
@@ -256,8 +336,7 @@ generators:
   assertions:
   - "@StatusCode != 401"
   - "@StatusCode != 404"
-  tags:
-  - "OWASP - OTG-BUSLOGIC-001"
+  tags: null
   severity: "Major"
   database: null
   inactive: true
@@ -279,56 +358,6 @@ generators:
     pathPatterns: null
     resourceSamples: "Get:/api/v1/alerts[Accept=application/json,Content-Type=application/json]\n\
       Post:/api/v1/accounts[Accept: application/json,Content-Type: application/json]"
-    queryParams: null
-    bodyProperties: null
-  authors: ""
-  abacResources: null
-- type: "sql_injection_timebound"
-  assertions:
-  - "@ResponseTime < 7000 OR @ResponseTime > 10000"
-  - "@StatusCode != 404"
-  tags:
-  - "OWASP A1"
-  - "[PCI DSS 3.0] 6.5.1"
-  - "OWASP - OTG-INPVAL-005"
-  - "FX Top 10 - API Vulnerability"
-  severity: "Major"
-  database:
-    name: "MySQL"
-    version: "5.7"
-  inactive: false
-  matches:
-  - name: null
-    value: null
-    methods: null
-    denyRoles: null
-    allowRoles: null
-    pathPatterns: "GET:/api/v1/accounts\nPOST:/api/v1/accounts\nGET:/api/v1/accounts/{id}\n\
-      PUT:/api/v1/accounts/{id}\nDELETE:/api/v1/accounts/{id}\nGET:/api/v1/accounts/account-type/{accountType}\n\
-      POST:/api/v1/accounts/batch\nGET:/api/v1/accounts/search"
-    resourceSamples: "User-Create"
-    queryParams: null
-    bodyProperties: "id,name"
-  authors: ""
-  abacResources: null
-- type: "DDOS"
-  assertions:
-  - "@StatusCode != 401"
-  - "@StatusCode != 404"
-  tags:
-  - "[PCI DSS 3.0] 6.5.2"
-  - "FX Top 10 - API Vulnerability"
-  severity: "Major"
-  database: null
-  inactive: true
-  matches:
-  - name: "pageSize, page_size, maxResults, max_results"
-    value: null
-    methods: null
-    denyRoles: null
-    allowRoles: null
-    pathPatterns: "POST:/api/v1/accounts"
-    resourceSamples: null
     queryParams: null
     bodyProperties: null
   authors: ""
