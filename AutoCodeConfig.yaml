@@ -192,7 +192,16 @@ generators:
     name: "MySQL"
     version: "5.7"
   inactive: true
-  matches: []
+  matches:
+  - name: null
+    value: null
+    methods: null
+    denyRoles: null
+    allowRoles: null
+    pathPatterns: "POST:/api/v1/accounts"
+    resourceSamples: "User-Create"
+    queryParams: null
+    bodyProperties: "id,name"
   authors: ""
   abacResources: null
 - type: "log_Forging"
