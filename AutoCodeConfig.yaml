@@ -5,8 +5,7 @@ generators:
 - type: "no_params"
   assertions:
   - "@StatusCode == 200"
-  tags:
-  - " OWASP - OTG-CONFIG-006"
+  tags: null
   severity: "Major"
   database: null
   inactive: true
@@ -20,15 +19,22 @@ generators:
   severity: "Major"
   database: null
   inactive: true
-  matches: []
+  matches:
+  - name: null
+    value: null
+    methods: null
+    denyRoles: null
+    allowRoles: null
+    pathPatterns: null
+    resourceSamples: null
+    queryParams: null
+    bodyProperties: null
   authors: ""
   abacResources: null
 - type: "anonymous_invalid"
   assertions:
   - "@StatusCode == 401 OR @StatusCode == 403"
-  tags:
-  - "OWASP - OTG-AUTHN-002"
-  - "FX Top 10 - API Vulnerability"
+  tags: null
   severity: "Major"
   database: null
   inactive: true
@@ -47,15 +53,7 @@ generators:
 - type: "auth_invalid"
   assertions:
   - "@StatusCode == 401 OR @StatusCode == 403"
-  tags:
-  - "OWASP A2"
-  - "OWASP A5"
-  - "OWASP A6"
-  - "OWASP A7"
-  - "[PIC DSS 3.0] 6.5.8"
-  - "[PIC DSS 3.0] 6.5.10"
-  - "OTG-AUTHN-004"
-  - "FX Top 10 - API Vulnerability"
+  tags: null
   severity: "Major"
   database: null
   inactive: true
@@ -74,15 +72,7 @@ generators:
 - type: "auth_invalid_empty"
   assertions:
   - "@StatusCode == 401 OR @StatusCode == 403"
-  tags:
-  - "OWASP A2"
-  - "OWASP A5"
-  - "OWASP A6"
-  - "OWASP A7"
-  - "[PIC DSS 3.0] 6.5.8"
-  - "[PIC DSS 3.0] 6.5.10"
-  - "OTG-AUTHN-004"
-  - "FX Top 10 - API Vulnerability"
+  tags: null
   severity: "Major"
   database: null
   inactive: true
@@ -101,11 +91,7 @@ generators:
 - type: "auth_invalid_sql"
   assertions:
   - "@StatusCode == 401 OR @StatusCode == 403"
-  tags:
-  - "OWASP A1"
-  - "[PCI DSS 3.0] 6.5.1"
-  - "OTG-AUTHN-004"
-  - "FX Top 10 - API Vulnerability"
+  tags: null
   severity: "Major"
   database: null
   inactive: true
@@ -125,9 +111,7 @@ generators:
   assertions:
   - "Disallowed:@StatusCode == 401 OR @StatusCode == 403"
   - "Allowed:@StatusCode != 401 AND @StatusCode != 403"
-  tags:
-  - "OWASP - OTG-IDENT-001 "
-  - "FX Top 10 - API Vulnerability"
+  tags: null
   severity: "Major"
   database: null
   inactive: true
@@ -147,8 +131,7 @@ generators:
   assertions:
   - "Create:@StatusCode == 200 OR @StatusCode == 201"
   - "Disallowed:@StatusCode == 401 OR @StatusCode == 403"
-  tags:
-  - "FX Top 10 - API Vulnerability"
+  tags: null
   severity: "Major"
   database: null
   inactive: true
@@ -159,12 +142,31 @@ generators:
   assertions:
   - "Create:@StatusCode == 200 OR @StatusCode == 201"
   - "Allowed:@StatusCode == 200 OR @StatusCode == 201"
-  tags:
-  - "FX Top 10 - API Vulnerability"
+  tags: null
   severity: "Major"
   database: null
   inactive: true
   matches: []
+  authors: ""
+  abacResources: null
+- type: "DDOS"
+  assertions:
+  - "@StatusCode != 401"
+  - "@StatusCode != 404"
+  tags: null
+  severity: "Major"
+  database: null
+  inactive: true
+  matches:
+  - name: "pageSize, page_size, maxResults, max_results"
+    value: null
+    methods: null
+    denyRoles: null
+    allowRoles: null
+    pathPatterns: "POST:/api/v1/accounts"
+    resourceSamples: null
+    queryParams: null
+    bodyProperties: null
   authors: ""
   abacResources: null
 - type: "XSS_Injection"
@@ -173,128 +175,21 @@ generators:
   - "@StatusCode != 401"
   - "@StatusCode != 404"
   - "@StatusCode != 500"
-  tags:
-  - "OWASP A3"
-  - "[PIC DSS 3.0] 6.5.7"
-  - "OWASP - OTG-INPVAL-001"
-  - "OWASP - OTG-INPVAL-002"
-  - "FX Top 10 - API Vulnerability"
-  severity: "Major"
-  database: null
-  inactive: true
-  matches: []
-  authors: ""
-  abacResources: null
-- type: "log_Forging"
-  assertions:
-  - "@StatusCode != 200"
-  - "@StatusCode != 401"
-  - "@StatusCode != 404"
-  - "@StatusCode != 500"
-  tags:
-  - "OWASP - Log Injection"
-  severity: "Major"
-  database: null
-  inactive: true
-  matches: []
-  authors: ""
-  abacResources: null
-- type: "invalid_datatype"
-  assertions:
-  - "@StatusCode != 401"
-  - "@StatusCode != 404"
-  tags:
-  - "OWASP - OTG-BUSLOGIC-001"
-  severity: "Major"
-  database: null
-  inactive: true
-  matches: []
-  authors: ""
-  abacResources: null
-- type: "special_chars "
-  assertions:
-  - "@StatusCode != 200"
-  - "@StatusCode != 401"
-  - "@StatusCode != 404"
-  - "@StatusCode != 500"
-  tags:
-  - "OWASP - OTG-BUSLOGIC-001"
-  severity: "Major"
-  database: null
-  inactive: true
-  matches: []
-  authors: ""
-  abacResources: null
-- type: "null_value"
-  assertions:
-  - "@StatusCode != 200"
-  - "@StatusCode != 401"
-  - "@StatusCode != 404"
-  - "@StatusCode != 500"
-  tags:
-  - "OWASP - OTG-BUSLOGIC-001"
-  severity: "Major"
-  database: null
-  inactive: true
-  matches: []
-  authors: ""
-  abacResources: null
-- type: "empty_value"
-  assertions:
-  - "@StatusCode != 200"
-  - "@StatusCode != 401"
-  - "@StatusCode != 404"
-  - "@StatusCode != 500"
   tags: null
   severity: "Major"
   database: null
   inactive: true
   matches: []
-  authors: ""
-  abacResources: null
-- type: "negative_number"
-  assertions:
-  - "@StatusCode != 401"
-  - "@StatusCode != 404"
-  tags:
-  - "OWASP - OTG-BUSLOGIC-001"
-  severity: "Major"
-  database: null
-  inactive: true
-  matches: []
-  authors: ""
-  abacResources: null
-- type: "customize"
-  assertions: []
-  tags: null
-  severity: null
-  database: null
-  inactive: false
-  matches:
-  - name: null
-    value: null
-    methods: null
-    denyRoles: null
-    allowRoles: null
-    pathPatterns: null
-    resourceSamples: "Get:/api/v1/alerts[Accept=application/json,Content-Type=application/json]\n\
-      Post:/api/v1/accounts[Accept: application/json,Content-Type: application/json]"
-    queryParams: null
-    bodyProperties: null
   authors: ""
   abacResources: null
 - type: "sql_injection_timebound"
   assertions:
   - "@ResponseTime < 7000 OR @ResponseTime > 10000"
   - "@StatusCode != 404"
-  tags:
-  - "OWASP A1"
-  - "[PCI DSS 3.0] 6.5.1"
-  - "OWASP - OTG-INPVAL-005"
-  - "FX Top 10 - API Vulnerability"
+  tags: null
   severity: "Major"
   database:
-    name: "MySQL"
+    name: "SQLServer"
     version: "5.7"
   inactive: false
   matches:
@@ -303,18 +198,21 @@ generators:
     methods: null
     denyRoles: null
     allowRoles: null
-    pathPatterns: "GET:/api/v1/alerts\nGET:/api/v1/alerts/{id}\nGET:/api/v1/alerts/ref/{id}\n\
-      GET:/api/v1/bot-clusters\nPOST:/api/v1/bot-clusters\nGET:/api/v1/bot-clusters/{id}\n\
-      PUT:/api/v1/bot-clusters/{id}\nDELETE:/api/v1/bot-clusters/{id}\nGET:/api/v1/bot-clusters/{id}/ping\n\
-      PUT:/api/v1/bot-clusters/{id}/terminal\nPOST:/api/v1/bot-clusters/batch\nGET:/api/v1/bot-clusters/entitled\n\
-      GET:/api/v1/bot-clusters/search\nGET:/api/v1/bot-clusters/superbotnetwork\n\
-      GET:/api/v1/dashboard/bots/{id}/savings\nGET:/api/v1/dashboard/count-auto-suggestions\n\
-      GET:/api/v1/dashboard/count-bugs\nGET:/api/v1/dashboard/count-bugs-between\n\
-      GET:/api/v1/dashboard/count-bytes\nGET:/api/v1/dashboard/count-bytes-between\n\
-      GET:/api/v1/dashboard/count-channels\nGET:/api/v1/dashboard/count-ebots\nGET:/api/v1/dashboard/count-envs\n\
-      GET:/api/v1/dashboard/count-ibots\nGET:/api/v1/dashboard/count-jobs\nGET:/api/v1/dashboard/count-projects\n\
-      GET:/api/v1/dashboard/count-runs\nGET:/api/v1/dashboard/count-runs-between\n\
-      GET:/api/v1/dashboard/count-suites\nGET:/api/v1/dashboard/count-tests\nGET:/api/v1/dashboard/count-tests-between\n\
+    pathPatterns: "GET:/api/v1/accounts\nPOST:/api/v1/accounts\nGET:/api/v1/accounts/{id}\n\
+      PUT:/api/v1/accounts/{id}\nDELETE:/api/v1/accounts/{id}\nGET:/api/v1/accounts/account-type/{accountType}\n\
+      POST:/api/v1/accounts/batch\nGET:/api/v1/accounts/search\nGET:/api/v1/alerts\n\
+      GET:/api/v1/alerts/{id}\nGET:/api/v1/alerts/ref/{id}\nGET:/api/v1/bot-clusters\n\
+      POST:/api/v1/bot-clusters\nGET:/api/v1/bot-clusters/{id}\nPUT:/api/v1/bot-clusters/{id}\n\
+      DELETE:/api/v1/bot-clusters/{id}\nGET:/api/v1/bot-clusters/{id}/ping\nPUT:/api/v1/bot-clusters/{id}/terminal\n\
+      POST:/api/v1/bot-clusters/batch\nGET:/api/v1/bot-clusters/entitled\nGET:/api/v1/bot-clusters/search\n\
+      GET:/api/v1/bot-clusters/superbotnetwork\nGET:/api/v1/dashboard/bots/{id}/savings\n\
+      GET:/api/v1/dashboard/count-auto-suggestions\nGET:/api/v1/dashboard/count-bugs\n\
+      GET:/api/v1/dashboard/count-bugs-between\nGET:/api/v1/dashboard/count-bytes\n\
+      GET:/api/v1/dashboard/count-bytes-between\nGET:/api/v1/dashboard/count-channels\n\
+      GET:/api/v1/dashboard/count-ebots\nGET:/api/v1/dashboard/count-envs\nGET:/api/v1/dashboard/count-ibots\n\
+      GET:/api/v1/dashboard/count-jobs\nGET:/api/v1/dashboard/count-projects\nGET:/api/v1/dashboard/count-runs\n\
+      GET:/api/v1/dashboard/count-runs-between\nGET:/api/v1/dashboard/count-suites\n\
+      GET:/api/v1/dashboard/count-tests\nGET:/api/v1/dashboard/count-tests-between\n\
       GET:/api/v1/dashboard/count-time\nGET:/api/v1/dashboard/count-time-between\n\
       GET:/api/v1/dashboard/issuetracker/{id}/issuetracker-savings\nGET:/api/v1/dashboard/projects/{id}/savings\n\
       GET:/api/v1/dashboard/run/{id}/run-savings\nGET:/api/v1/data-records\nPUT:/api/v1/data-records\n\
@@ -352,13 +250,7 @@ generators:
       PUT:/api/v1/projects/{projectId}/env/{envId}\nDELETE:/api/v1/projects/{projectId}/env/{envId}\n\
       POST:/api/v1/projects/{projectId}/envs\nGET:/api/v1/projects/{projectId}/files/{id}\n\
       POST:/api/v1/projects/{projectId}/new/autocodeconfig\nGET:/api/v1/projects/find-by-name/{name}\n\
-      GET:/api/v1/projects/name/{name}\nGET:/api/v1/projects/search\nGET:/api/v1/runs/{id}\n\
-      DELETE:/api/v1/runs/{id}\nGET:/api/v1/runs/{id}/test-suite-response/{name}\n\
-      GET:/api/v1/runs/{id}/test-suite-responses\nGET:/api/v1/runs/{id}/test-suite-summary\n\
-      GET:/api/v1/runs/{id}/test-suite-summary/search\nGET:/api/v1/runs/{jobId}/testSuite/test-suite-responses/{name}\n\
-      GET:/api/v1/runs/job/{id}\nPOST:/api/v1/runs/job/{id}\nGET:/api/v1/runs/job/{id}/runNo/{runNo}\n\
-      POST:/api/v1/runs/job/{jobId}/rerun/{runId}\nDELETE:/api/v1/runs/job/{jobId}/run/{runId}\n\
-      GET:/api/v1/runs/stoprun/{id}\nPOST:/api/v1/runs/testsuite\nGET:/api/v1/skills\n\
+      GET:/api/v1/projects/name/{name}\nGET:/api/v1/projects/search\nGET:/api/v1/skills\n\
       PUT:/api/v1/skills\nPOST:/api/v1/skills\nGET:/api/v1/skills/{id}\nDELETE:/api/v1/skills/{id}\n\
       GET:/api/v1/skills/type/{type}\nGET:/api/v1/system-settings\nPUT:/api/v1/system-settings\n\
       GET:/api/v1/system-settings/{id}\nGET:/api/v1/test-suites\nPUT:/api/v1/test-suites\n\
@@ -374,24 +266,117 @@ generators:
     bodyProperties: "id,name"
   authors: ""
   abacResources: null
-- type: "DDOS"
+- type: "no_sql_injection_timebound"
   assertions:
-  - "@StatusCode != 401"
+  - "@ResponseTime < 7000 OR @ResponseTime > 10000"
   - "@StatusCode != 404"
-  tags:
-  - "[PCI DSS 3.0] 6.5.2"
-  - "FX Top 10 - API Vulnerability"
+  tags: null
   severity: "Major"
-  database: null
+  database:
+    name: "MongoDB"
+    version: "4.0"
   inactive: true
   matches:
-  - name: "pageSize, page_size, maxResults, max_results"
+  - name: null
     value: null
     methods: null
     denyRoles: null
     allowRoles: null
-    pathPatterns: "POST:/api/v1/accounts"
-    resourceSamples: null
+    pathPatterns: null
+    resourceSamples: "User-Create"
+    queryParams: null
+    bodyProperties: "id,name"
+  authors: ""
+  abacResources: null
+- type: "log_Forging"
+  assertions:
+  - "@StatusCode != 200"
+  - "@StatusCode != 401"
+  - "@StatusCode != 404"
+  - "@StatusCode != 500"
+  tags: null
+  severity: "Major"
+  database: null
+  inactive: true
+  matches: []
+  authors: ""
+  abacResources: null
+- type: "invalid_datatype"
+  assertions:
+  - "@StatusCode != 401"
+  - "@StatusCode != 404"
+  tags: null
+  severity: "Major"
+  database: null
+  inactive: true
+  matches: []
+  authors: ""
+  abacResources: null
+- type: "special_chars "
+  assertions:
+  - "@StatusCode != 200"
+  - "@StatusCode != 401"
+  - "@StatusCode != 404"
+  - "@StatusCode != 500"
+  tags: null
+  severity: "Major"
+  database: null
+  inactive: true
+  matches: []
+  authors: ""
+  abacResources: null
+- type: "null_value"
+  assertions:
+  - "@StatusCode != 200"
+  - "@StatusCode != 401"
+  - "@StatusCode != 404"
+  - "@StatusCode != 500"
+  tags: null
+  severity: "Major"
+  database: null
+  inactive: true
+  matches: []
+  authors: ""
+  abacResources: null
+- type: "empty_value"
+  assertions:
+  - "@StatusCode != 200"
+  - "@StatusCode != 401"
+  - "@StatusCode != 404"
+  - "@StatusCode != 500"
+  tags: null
+  severity: "Major"
+  database: null
+  inactive: true
+  matches: []
+  authors: ""
+  abacResources: null
+- type: "negative_number"
+  assertions:
+  - "@StatusCode != 401"
+  - "@StatusCode != 404"
+  tags: null
+  severity: "Major"
+  database: null
+  inactive: true
+  matches: []
+  authors: ""
+  abacResources: null
+- type: "customize"
+  assertions: []
+  tags: null
+  severity: null
+  database: null
+  inactive: false
+  matches:
+  - name: null
+    value: null
+    methods: null
+    denyRoles: null
+    allowRoles: null
+    pathPatterns: null
+    resourceSamples: "Get:/api/v1/alerts[Accept=application/json,Content-Type=application/json]\n\
+      Post:/api/v1/accounts[Accept: application/json,Content-Type: application/json]"
     queryParams: null
     bodyProperties: null
   authors: ""
