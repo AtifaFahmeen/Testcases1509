@@ -247,7 +247,7 @@ generators:
   tags: null
   severity: "Major"
   database:
-    name: "MySQL"
+    name: "Postgres"
     version: "5.7"
   inactive: false
   matches:
